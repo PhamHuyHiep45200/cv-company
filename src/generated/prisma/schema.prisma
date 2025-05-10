@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+  // output   = "node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EMPLOYEE
+  CANDIDATE
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  phone         String?
+  password      String         @default("")
+  avatar        String? // Optional avatar URL
+  role          String         @default("CANDIDATE")
+  status        String         @default("ACTIVE")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @default(now()) @updatedAt
+  job_posts     JobPost[]
+  applications  Application[]
+  notifications Notification[]
+}
+
+model JobPost {
+  id           String        @id @default(uuid())
+  title        String
+  description  String
+  requirements String
+  benefits     String
+  salary       String
+  location     String
+  status       String        @default("OPEN") // OPEN, CLOSED, DRAFT
+  posted_by    User          @relation(fields: [posted_by_id], references: [id])
+  posted_by_id String
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+  deadline     DateTime
+  applications Application[]
+  category     CategoryJob   @relation(fields: [category_id], references: [id])
+  category_id  String
+}
+
+model Application {
+  id           String      @id @default(uuid())
+  user         User        @relation(fields: [user_id], references: [id])
+  user_id      String
+  job_post     JobPost     @relation(fields: [job_post_id], references: [id])
+  job_post_id  String
+  cv_file      String
+  cover_letter String
+  status       String      @default("PENDING") // PENDING, REVIEWING, ACCEPTED, REJECTED
+  applied_at   DateTime    @default(now())
+  updated_at   DateTime    @updatedAt
+  interviews   Interview[]
+}
+
+model Interview {
+  id             String      @id @default(uuid())
+  application    Application @relation(fields: [application_id], references: [id])
+  application_id String
+  scheduled_at   DateTime
+  location       String
+  result         String? // Optional field for interview result
+  notes          String? // Optional field for interview notes
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
+}
+
+model Notification {
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+  content    String
+  is_read    Boolean  @default(false)
+  created_at DateTime @default(now())
+}
+
+model CategoryJob {
+  id         String    @id @default(uuid())
+  name       String    @unique
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  job_posts  JobPost[]
+}
