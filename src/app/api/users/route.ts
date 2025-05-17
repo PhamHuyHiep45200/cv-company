@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { PrismaClient } from '@/generated/prisma';
-import { verifyToken } from '@/utils/jwt';
 import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -9,30 +8,8 @@ const prisma = new PrismaClient();
 // GET all users
 export async function GET(request: NextRequest) {
   try {
-    // Get the token from the cookies using the same method as middleware
-    const token = request.cookies.get('token')?.value;
-    
-    if (!token) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    // Verify the token
-    const verifiedToken = await verifyToken(token);
-    if (!verifiedToken) {
-      return NextResponse.json(
-        { error: 'Invalid token' },
-        { status: 401 }
-      );
-    }
-
-    // Get users based on role
+    // Public: no token or role check
     const users = await prisma.user.findMany({
-      where: {
-        role: verifiedToken.role === 'ADMIN' ? undefined : 'EMPLOYEE'
-      },
       select: {
         id: true,
         name: true,
@@ -44,7 +21,6 @@ export async function GET(request: NextRequest) {
         updatedAt: true,
       },
     });
-
     return NextResponse.json(users);
   } catch (error) {
     console.error('Error fetching users:', error);

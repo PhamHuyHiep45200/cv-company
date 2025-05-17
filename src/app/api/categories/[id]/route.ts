@@ -55,6 +55,7 @@ export async function PUT(
       },
       data: {
         name: body.name,
+        thumbnail: body.thumbnail ?? null,
       },
     });
 

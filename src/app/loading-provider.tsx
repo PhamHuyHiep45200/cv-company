@@ -19,15 +19,15 @@ function LoadingSpinner() {
         <div
           className="w-20 h-20 rounded-full animate-spin"
           style={{
-            background: 'conic-gradient(from 0deg, #60a5fa, #a78bfa, #f472b6, #60a5fa)',
+            background: 'conic-gradient(from 0deg, #309689, #3ad29f, #309689)',
             WebkitMask: 'radial-gradient(farthest-side, transparent 70%, black 71%)',
             mask: 'radial-gradient(farthest-side, transparent 70%, black 71%)',
           }}
         ></div>
         {/* Pulsing center dot */}
-        <div className="absolute w-8 h-8 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded-full animate-pulse shadow-lg"></div>
+        <div className="absolute w-8 h-8 bg-gradient-to-r from-[#309689] to-[#3ad29f] rounded-full animate-pulse shadow-lg"></div>
       </div>
-      <span className="mt-6 text-white text-lg font-semibold animate-pulse">Loading...</span>
+      <span className="mt-6 text-[#309689] text-lg font-semibold animate-pulse">Loading...</span>
     </div>
   );
 }
@@ -39,7 +39,7 @@ export default function LoadingProvider({ children }: { children: React.ReactNod
 
   useEffect(() => {
     setRouteLoading(true);
-    const timeout = setTimeout(() => setRouteLoading(false), 400);
+    const timeout = setTimeout(() => setRouteLoading(false), 600);
     return () => clearTimeout(timeout);
   }, [pathname]);
 

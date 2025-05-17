@@ -16,6 +16,7 @@ export async function GET(
           select: {
             id: true,
             name: true,
+            thumbnail: true,
           },
         },
         level: {
@@ -106,6 +107,7 @@ export async function PUT(
           select: {
             id: true,
             name: true,
+            thumbnail: true,
           },
         },
         level: {

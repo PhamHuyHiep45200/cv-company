@@ -100,6 +100,7 @@ model CategoryJob {
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   job_posts  JobPost[]
+  thumbnail  String?   // Optional thumbnail image URL or path
 }
 
 model Level {

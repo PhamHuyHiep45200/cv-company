@@ -45,15 +45,18 @@ model JobPost {
   benefits     String
   salary       String
   location     String
+  experience   String        @default("0") // Years of experience required
   status       String        @default("OPEN") // OPEN, CLOSED, DRAFT
-  posted_by    User          @relation(fields: [posted_by_id], references: [id])
-  posted_by_id String
+  deadline     DateTime
   created_at   DateTime      @default(now())
   updated_at   DateTime      @updatedAt
-  deadline     DateTime
-  applications Application[]
   category     CategoryJob   @relation(fields: [category_id], references: [id])
   category_id  String
+  level        Level         @relation(fields: [level_id], references: [id])
+  level_id     String
+  posted_by    User          @relation(fields: [posted_by_id], references: [id])
+  posted_by_id String
+  applications Application[]
 }
 
 model Application {
@@ -97,4 +100,13 @@ model CategoryJob {
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   job_posts  JobPost[]
+  thumbnail  String? // Optional thumbnail image URL or path
+}
+
+model Level {
+  id         String    @id @default(cuid())
+  name       String    @unique
+  jobPosts   JobPost[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
 }

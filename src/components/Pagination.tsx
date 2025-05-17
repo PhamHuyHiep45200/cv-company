@@ -1,6 +1,4 @@
-import React from 'react';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import React from "react";
 
 interface PaginationProps {
   currentPage: number;
@@ -8,84 +6,65 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export default function Pagination({
-  currentPage,
-  totalPages,
-  onPageChange,
-}: PaginationProps) {
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-  const maxVisiblePages = 5;
-  
-  let visiblePages = pages;
-  if (totalPages > maxVisiblePages) {
-    const start = Math.max(
-      Math.min(
-        currentPage - Math.floor(maxVisiblePages / 2),
-        totalPages - maxVisiblePages + 1
-      ),
-      1
-    );
-    visiblePages = pages.slice(start - 1, start - 1 + maxVisiblePages);
-  }
+export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+  if (totalPages <= 1) return null;
+
+  const handlePrev = () => {
+    if (currentPage > 1) onPageChange(currentPage - 1);
+  };
+  const handleNext = () => {
+    if (currentPage < totalPages) onPageChange(currentPage + 1);
+  };
+
+  // Show up to 5 page numbers, with ... if needed
+  const getPageNumbers = () => {
+    const pages = [];
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      if (currentPage <= 3) {
+        pages.push(1, 2, 3, 4, '...', totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+      } else {
+        pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+      }
+    }
+    return pages;
+  };
 
   return (
-    <div className="flex items-center justify-center space-x-2 mt-4">
+    <div className="flex justify-center gap-2 mt-8">
       <button
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={handlePrev}
         disabled={currentPage === 1}
-        className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        className="border border-[#6C757D] text-[#6C757D] rounded-lg px-4 py-2 font-semibold font-['Figtree'] hover:bg-[#e6f4f1] transition disabled:opacity-50"
       >
-        <ChevronLeftIcon />
+        Trước
       </button>
-
-      {visiblePages[0] > 1 && (
-        <>
+      {getPageNumbers().map((page, idx) =>
+        typeof page === 'number' ? (
           <button
-            onClick={() => onPageChange(1)}
-            className="px-3 py-1 rounded-lg border border-gray-300 hover:bg-gray-50"
+            key={page}
+            onClick={() => onPageChange(page)}
+            className={`px-4 py-2 rounded-lg font-semibold font-['Figtree'] transition ${
+              page === currentPage
+                ? 'bg-gradient-to-r from-[#309689] to-[#3ad29f] text-white shadow'
+                : 'border border-[#6C757D] text-[#6C757D] hover:bg-[#e6f4f1]'
+            }`}
           >
-            1
+            {page}
           </button>
-          {visiblePages[0] > 2 && (
-            <span className="px-2">...</span>
-          )}
-        </>
+        ) : (
+          <span key={idx} className="px-2 py-2 text-[#6C757D]">...</span>
+        )
       )}
-
-      {visiblePages.map((page) => (
-        <button
-          key={page}
-          onClick={() => onPageChange(page)}
-          className={`px-3 py-1 rounded-lg border ${
-            currentPage === page
-              ? 'bg-blue-600 text-white border-blue-600'
-              : 'border-gray-300 hover:bg-gray-50'
-          }`}
-        >
-          {page}
-        </button>
-      ))}
-
-      {visiblePages[visiblePages.length - 1] < totalPages && (
-        <>
-          {visiblePages[visiblePages.length - 1] < totalPages - 1 && (
-            <span className="px-2">...</span>
-          )}
-          <button
-            onClick={() => onPageChange(totalPages)}
-            className="px-3 py-1 rounded-lg border border-gray-300 hover:bg-gray-50"
-          >
-            {totalPages}
-          </button>
-        </>
-      )}
-
       <button
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={handleNext}
         disabled={currentPage === totalPages}
-        className="p-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+        className="border border-[#6C757D] text-[#6C757D] rounded-lg px-4 py-2 font-semibold font-['Figtree'] hover:bg-[#e6f4f1] transition disabled:opacity-50"
       >
-        <ChevronRightIcon />
+        Tiếp
       </button>
     </div>
   );

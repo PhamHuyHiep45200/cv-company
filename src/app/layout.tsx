@@ -5,6 +5,8 @@ import LoadingProvider from "./loading-provider";
 import { Providers } from "./providers";
 import { AuthProvider } from '@/providers/AuthProvider';
 import { cookies } from "next/headers";
+import ClientWrapper from './ClientWrapper';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -27,14 +29,19 @@ export default function RootLayout({
 }>) {
   const cookieStore = cookies();
   const token = cookieStore.get('token')?.value;
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
   return (
     <html lang="en" className={roboto.variable}>
       <body className="antialiased">
-        <Providers>
-          <AuthProvider token={token}>
-            <LoadingProvider>{children}</LoadingProvider>
-          </AuthProvider>
-        </Providers>
+        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ''}>
+          <Providers>
+            <AuthProvider token={token}>
+              <LoadingProvider>
+                <ClientWrapper>{children}</ClientWrapper>
+              </LoadingProvider>
+            </AuthProvider>
+          </Providers>
+        </GoogleOAuthProvider>
       </body>
     </html>
   );
