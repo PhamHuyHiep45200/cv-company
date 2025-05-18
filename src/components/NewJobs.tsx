@@ -45,7 +45,8 @@ export default function HeroSectionBottom() {
             Việc làm mới nhất
           </h2>
           <p className="text-[16px] font-normal leading-[22px] text-black opacity-80 font-['Figtree']">
-            Tại eu lobortis pretium tincidunt amet lacus ut aenean aliquet. Blandit a massa elementum id scelerisque rhoncus. Lectus dolor blandit massa pretium id ultrices phasellus tortor. Risus risus lectus augue justo lacus viverra sit. Ultricies purus dolor viverra mi laoreet at cursus justo. Ultrices purus diam egestas amet faucibus tempor blandit. Elit velit mauris aliquam est diam. Leo sagittis consectetur diam morbi erat aenean. Vulputate praesent congue faucibus in euismod feugiat euismod volutpat. Adipiscing risus amet phasellus imperdiet eget vel pulvinar. Risus in felis faucibus sit. Scelerisque consequat iaculis mauris amet vel felis id tincidunt nunc.
+          Khám phá ngay những cơ hội việc làm mới nhất và được săn đón nhiều nhất từ các nhà tuyển dụng uy tín! Chúng tôi liên tục cập nhật các vị trí hấp dẫn với mức lương cạnh tranh, môi trường làm việc chuyên nghiệp và cơ hội phát triển vượt bậc.
+          Dù bạn là ứng viên mới ra trường hay chuyên gia giàu kinh nghiệm, đây là nơi lý tưởng để bạn bắt đầu hành trình nghề nghiệp mới một cách bứt phá!
           </p>
         </div>
         <a href="#" className="text-[#309689] text-[20px] md:text-[24px] font-semibold font-['Figtree'] leading-[29px] transition-colors hover:text-[#26786b]">Xem tất cả</a>
