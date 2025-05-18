@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@/generated/prisma';
 import type { NextRequest } from 'next/server';
 import { verifyToken } from '@/utils/jwt';
-
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // GET single user

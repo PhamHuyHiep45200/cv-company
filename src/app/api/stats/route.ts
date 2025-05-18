@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@/generated/prisma';
-
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function GET() {
@@ -20,13 +19,13 @@ export async function GET() {
       _count: { job_post_id: true },
     });
     // Get job post titles for mapping
-    const jobPostIds = candidatesByJob.map(j => j.job_post_id);
+    const jobPostIds = candidatesByJob.map((j: any) => j.job_post_id);
     const jobPosts = await prisma.jobPost.findMany({
       where: { id: { in: jobPostIds } },
       select: { id: true, title: true },
     });
-    const jobTitleMap = Object.fromEntries(jobPosts.map(j => [j.id, j.title]));
-    const candidatesByJobWithTitle = candidatesByJob.map(j => ({
+    const jobTitleMap = Object.fromEntries(jobPosts.map((j: any) => [j.id, j.title]));
+    const candidatesByJobWithTitle = candidatesByJob.map((j: any) => ({
       job_post_id: j.job_post_id,
       job_title: jobTitleMap[j.job_post_id] || '',
       count: j._count.job_post_id,

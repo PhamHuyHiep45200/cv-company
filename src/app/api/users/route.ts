@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { PrismaClient } from '@/generated/prisma';
 import bcrypt from 'bcryptjs';
-
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // GET all users
