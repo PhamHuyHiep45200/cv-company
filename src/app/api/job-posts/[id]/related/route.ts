@@ -21,6 +21,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
       },
       orderBy: { created_at: 'desc' },
       take: 5,
+      include: {
+        category: true,
+        level: true,
+      },
     });
     return NextResponse.json(relatedJobs);
   } catch (error) {

@@ -63,6 +63,37 @@ export default function JobDetailPage() {
     );
   }
 
+  function mapJobToJobCard(job: any) {
+    return {
+      badge: job.level?.name || "",
+      icon: "/assets/logos/job-card-icon.svg",
+      logo: job.category?.thumbnail || "/assets/job-detail/job-detail-logo.svg",
+      title: job.title,
+      timePost: job.updated_at
+        ? formatDistance(new Date(job.updated_at), new Date(), { addSuffix: true, locale: vi })
+        : "",
+      category: {
+        icon: "/assets/logos/job-card-briefcase.svg",
+        text: job.category?.name || "",
+      },
+      type: {
+        icon: "/assets/logos/job-card-clock.svg",
+        text: job.deadline ? new Date(job.deadline).toLocaleDateString() : "",
+      },
+      salary: {
+        icon: "/assets/logos/job-card-salary.svg",
+        text: job.salary ? `${job.salary} VND` : "",
+      },
+      location: {
+        icon: "/assets/logos/job-card-map-pin.svg",
+        text: job.location || "",
+      },
+      onDetailsClick: () => {
+        window.location.href = `/jobs/${job.id}`;
+      },
+    };
+  }
+
   return (
     <main className="bg-white min-h-screen w-full flex flex-col items-center">
       {/* Hero Section */}
@@ -201,7 +232,7 @@ export default function JobDetailPage() {
                   <FaDollarSign className="text-[#309689] w-4 min-h-4 text-[20px]" />
                 </div>{" "}
                 <b className="text-nowrap">Lương:</b>{" "}
-                {job.salary ? `${job.salary} VND` : ""}
+                {job.salary ? `${job.salary}` : ""}
               </span>
               <span className="flex items-center gap-2">
                 <FaRegClock className="text-[#309689]" />{" "}
@@ -223,7 +254,7 @@ export default function JobDetailPage() {
           </h2>
         <div className="flex flex-col gap-8">
           {relatedJobs.map((job, idx) => (
-              <JobCard key={job.id || idx} {...job} />
+              <JobCard key={job.id || idx} {...mapJobToJobCard(job)} />
           ))}
         </div>
       </section>
