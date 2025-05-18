@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@/generated/prisma';
-import { hash } from 'bcrypt';
 import type { NextRequest } from 'next/server';
 import { verifyToken } from '@/utils/jwt';
 
