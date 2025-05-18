@@ -134,7 +134,7 @@ export default function LevelList() {
     {
       header: '#',
       accessor: 'index',
-      render: (_: unknown, __: unknown, index: number) => index + 1,
+      render: (_: unknown, __: unknown, index?: number) => (index ?? 0) + 1,
     },
     {
       header: 'Tên Vị Trí',
