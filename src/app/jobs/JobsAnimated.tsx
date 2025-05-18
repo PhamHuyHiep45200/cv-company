@@ -21,7 +21,7 @@ export default function JobsAnimated({
   levelValue,
   setLevelValue,
   handleApplyFilters,
-}) {
+}: any) {
   return (
     <main className="w-full min-h-screen bg-[#f7fafc] flex flex-col items-center">
       <div className="w-full max-w-[1440px] flex flex-col lg:flex-row gap-8 px-4 md:px-[72px] pt-[60px] pb-[120px]">
@@ -41,7 +41,7 @@ export default function JobsAnimated({
               <label className="block text-[16px] font-semibold font-['Figtree'] mb-2">Ngành nghề</label>
               <select value={categoryValue} onChange={e => setCategoryValue(e.target.value)} className="w-full rounded-lg px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#309689]">
                 <option value="">Tất cả</option>
-                {categories.map((cat) => (
+                {categories.map((cat: any) => (
                   <option key={cat.id} value={cat.id}>{cat.name}</option>
                 ))}
               </select>
@@ -50,7 +50,7 @@ export default function JobsAnimated({
               <label className="block text-[16px] font-semibold font-['Figtree'] mb-2">Trình độ</label>
               <select value={levelValue} onChange={e => setLevelValue(e.target.value)} className="w-full rounded-lg px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#309689]">
                 <option value="">Tất cả</option>
-                {levels.map((level) => (
+                {levels.map((level: any) => (
                   <option key={level.id} value={level.id}>{level.name}</option>
                 ))}
               </select>
@@ -81,7 +81,7 @@ export default function JobsAnimated({
             ) : search && jobs.length === 0 ? (
               <div>Không tìm thấy công việc phù hợp.</div>
             ) : (
-              jobs.map((job, idx) => (
+              jobs.map((job: any, idx: number) => (
                 <motion.div key={job.id || idx} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: idx * 0.08 }}>
                   <JobCard {...mapJobToCard(job)} />
                 </motion.div>

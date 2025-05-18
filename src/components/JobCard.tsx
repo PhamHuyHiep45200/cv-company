@@ -65,7 +65,7 @@ const JobCard: React.FC<JobCardProps> = ({
       </div>
       <div className="flex items-center gap-3 min-w-[120px]">
         <img src={"/assets/logos/job-card-salary.svg"} alt="salary" className="w-6 h-6" />
-        <span className="font-semibold text-[15px] md:text-[16px] text-gray-700 font-['Figtree']">{salary.text}</span>
+        <span className="font-semibold text-[15px] md:text-[16px] text-gray-700 font-['Figtree'] text-nowrap">{salary.text}</span>
       </div>
       <div className="flex items-center gap-3 min-w-[140px]">
         <img src={"/assets/logos/job-card-map-pin.svg"} alt="location" className="w-6 h-6" />

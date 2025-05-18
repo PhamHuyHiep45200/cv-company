@@ -39,7 +39,7 @@ export default function JobsPage() {
     title: job.title,
     timePost: job.created_at ? formatDistanceToNow(new Date(job.created_at), { addSuffix: true, locale: vi }) : '',
     category: { icon: '/assets/logos/job-card-briefcase.svg', text: job.level?.name || '' },
-    type: { icon: '/assets/logos/job-card-clock.svg', text: job.type || '' },
+    type: { icon: '/assets/logos/job-card-clock.svg', text: job.deadline ? new Date(job.deadline).toLocaleDateString() : '' },
     salary: { icon: '/assets/logos/job-card-salary.svg', text: job.salary ? `${job.salary} VND` : '' },
     location: { icon: '/assets/logos/job-card-map-pin.svg', text: job.location || '' },
     onDetailsClick: () => router.push(`/jobs/${job.id}`),
