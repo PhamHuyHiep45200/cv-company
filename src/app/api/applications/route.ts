@@ -3,7 +3,7 @@ import { PrismaClient } from '@/generated/prisma';
 
 const prisma = new PrismaClient();
 
-export async function GET(req) {
+export async function GET(req: any) {
   try {
     const { searchParams } = new URL(req.url);
     const status = searchParams.get('status');
@@ -12,7 +12,7 @@ export async function GET(req) {
     const page = parseInt(searchParams.get('page') || '1', 10);
     const pageSize = parseInt(searchParams.get('pageSize') || '5', 10);
 
-    const where = {};
+    const where: any = {};
     if (status) where.status = status;
     if (email || name) {
       where.user = {};
