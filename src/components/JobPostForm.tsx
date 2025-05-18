@@ -43,8 +43,7 @@ export const jobPostSchema = Yup.object().shape({
     .required('Quyền lợi không được để trống')
     .min(30, 'Quyền lợi phải có ít nhất 30 ký tự'),
   salary: Yup.string()
-    .required('Lương không được để trống')
-    .matches(/^[0-9]+$/, 'Lương chỉ được chứa số'),
+    .required('Lương không được để trống'),
   location: Yup.string()
     .required('Địa điểm không được để trống'),
   experience: Yup.string()

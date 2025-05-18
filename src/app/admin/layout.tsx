@@ -13,7 +13,6 @@ import CategoryIcon from '@mui/icons-material/Category';
 import WorkIcon from '@mui/icons-material/Work';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
-import Cookies from 'js-cookie';
 
 export default function AdminLayout({
   children,
