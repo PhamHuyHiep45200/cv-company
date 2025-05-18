@@ -59,6 +59,7 @@ export async function middleware(request: NextRequest) {
       });
     } catch {
       // Redirect to login if token is invalid
+      request.cookies.delete('token');
       return NextResponse.redirect(new URL('/login', request.url));
     }
   }

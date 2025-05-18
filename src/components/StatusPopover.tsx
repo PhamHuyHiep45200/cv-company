@@ -8,13 +8,8 @@ interface StatusPopoverProps {
   onStatusChange: (status: string) => void;
   currentStatus: string;
   referenceElement: HTMLElement | null;
+  statusOptions?: Array<{ value: string; label: string; color: string }>;
 }
-
-const statusOptions = [
-  { value: 'OPEN', label: 'Đang tuyển', color: 'bg-green-100 text-green-800' },
-  { value: 'CLOSED', label: 'Đã đóng', color: 'bg-gray-100 text-gray-800' },
-  { value: 'DRAFT', label: 'Bản nháp', color: 'bg-yellow-100 text-yellow-800' },
-];
 
 export default function StatusPopover({
   isOpen,
@@ -22,6 +17,11 @@ export default function StatusPopover({
   onStatusChange,
   currentStatus,
   referenceElement,
+  statusOptions = [
+    { value: 'PENDING', label: 'Chờ duyệt', color: 'bg-yellow-100 text-yellow-800' },
+    { value: 'APPROVED', label: 'Đã duyệt', color: 'bg-green-100 text-green-800' },
+    { value: 'REJECTED', label: 'Từ chối', color: 'bg-red-100 text-red-800' },
+  ],
 }: StatusPopoverProps) {
   const [popperElement, setPopperElement] = React.useState<HTMLDivElement | null>(null);
 

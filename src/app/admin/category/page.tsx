@@ -15,6 +15,7 @@ const categorySchema = Yup.object().shape({
   name: Yup.string()
     .required('Tên danh mục không được để trống')
     .min(2, 'Tên danh mục phải có ít nhất 2 ký tự'),
+  thumbnail: Yup.string().nullable(),
 });
 
 export default function CategoryList() {
@@ -122,6 +123,20 @@ export default function CategoryList() {
       render: (_: any, __: any, index: number) => index + 1,
     },
     {
+      header: 'Ảnh',
+      accessor: 'thumbnail',
+      render: (thumbnail: string) =>
+        thumbnail ? (
+          <img
+            src={thumbnail}
+            alt="Thumbnail"
+            className="w-12 h-12 object-cover rounded"
+          />
+        ) : (
+          <span className="text-gray-400">Không có ảnh</span>
+        ),
+    },
+    {
       header: 'Tên Danh Mục',
       accessor: 'name',
     },
@@ -198,6 +213,7 @@ export default function CategoryList() {
               <Formik
                 initialValues={{
                   name: '',
+                  thumbnail: '',
                 }}
                 validationSchema={categorySchema}
                 onSubmit={handleSubmit}
@@ -217,6 +233,34 @@ export default function CategoryList() {
                         placeholder="Nhập tên danh mục"
                       />
                       <ErrorMessage name="name" component="div" className="text-red-500 text-sm mt-1" />
+                    </div>
+
+                    <div>
+                      <label htmlFor="thumbnail" className="block text-sm font-medium text-gray-700 mb-1">
+                        Ảnh đại diện (thumbnail)
+                      </label>
+                      <Field name="thumbnail">
+                        {({ field, form }: any) => (
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={async (event: React.ChangeEvent<HTMLInputElement>) => {
+                              const file = event.target.files?.[0];
+                              if (file) {
+                                const formData = new FormData();
+                                formData.append('file', file);
+                                const res = await fetch('/api/upload', { method: 'POST', body: formData });
+                                const data = await res.json();
+                                if (data.success && data.name) {
+                                  form.setFieldValue('thumbnail', `/uploads/${data.name}`);
+                                }
+                              }
+                            }}
+                            className="w-full px-3 py-2 border rounded-lg border-gray-300"
+                          />
+                        )}
+                      </Field>
+                      <ErrorMessage name="thumbnail" component="div" className="text-red-500 text-sm mt-1" />
                     </div>
 
                     <div className="flex justify-end gap-4 pt-4">
@@ -266,6 +310,7 @@ export default function CategoryList() {
               <Formik
                 initialValues={{
                   name: selectedCategory.name,
+                  thumbnail: selectedCategory.thumbnail || '',
                 }}
                 validationSchema={categorySchema}
                 onSubmit={handleEdit}
@@ -285,6 +330,37 @@ export default function CategoryList() {
                         placeholder="Nhập tên danh mục"
                       />
                       <ErrorMessage name="name" component="div" className="text-red-500 text-sm mt-1" />
+                    </div>
+
+                    <div>
+                      <label htmlFor="thumbnail" className="block text-sm font-medium text-gray-700 mb-1">
+                        Ảnh đại diện (thumbnail)
+                      </label>
+                      <Field name="thumbnail">
+                        {({ field, form }: any) => (
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={async (event: React.ChangeEvent<HTMLInputElement>) => {
+                              const file = event.target.files?.[0];
+                              if (file) {
+                                const formData = new FormData();
+                                formData.append('file', file);
+                                const res = await fetch('/api/upload', { method: 'POST', body: formData });
+                                const data = await res.json();
+                                if (data.success && data.name) {
+                                  form.setFieldValue('thumbnail', `/uploads/${data.name}`);
+                                }
+                              }
+                            }}
+                            className="w-full px-3 py-2 border rounded-lg border-gray-300"
+                          />
+                        )}
+                      </Field>
+                      {selectedCategory.thumbnail && (
+                        <img src={selectedCategory.thumbnail} alt="Thumbnail" className="w-20 h-20 mt-2 rounded" />
+                      )}
+                      <ErrorMessage name="thumbnail" component="div" className="text-red-500 text-sm mt-1" />
                     </div>
 
                     <div className="flex justify-end gap-4 pt-4">

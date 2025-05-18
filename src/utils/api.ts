@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { deleteCookie } from 'cookies-next';
 
 const api = axios.create({
   baseURL: '/api',
@@ -18,7 +19,9 @@ api.interceptors.response.use(
         (error.response.data?.error === 'Invalid token' || 
          error.response.data?.error === 'Token expired')) {
       // Redirect to login
-      console.log('Token is invalid or expired');
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+      });
       window.location.href = '/login';
     }
     return Promise.reject(error);

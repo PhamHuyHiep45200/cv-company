@@ -319,8 +319,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.8.2
+   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
    */
   export type PrismaVersion = {
     client: string
@@ -7335,6 +7335,7 @@ export namespace Prisma {
     name: string | null
     created_at: Date | null
     updated_at: Date | null
+    thumbnail: string | null
   }
 
   export type CategoryJobMaxAggregateOutputType = {
@@ -7342,6 +7343,7 @@ export namespace Prisma {
     name: string | null
     created_at: Date | null
     updated_at: Date | null
+    thumbnail: string | null
   }
 
   export type CategoryJobCountAggregateOutputType = {
@@ -7349,6 +7351,7 @@ export namespace Prisma {
     name: number
     created_at: number
     updated_at: number
+    thumbnail: number
     _all: number
   }
 
@@ -7358,6 +7361,7 @@ export namespace Prisma {
     name?: true
     created_at?: true
     updated_at?: true
+    thumbnail?: true
   }
 
   export type CategoryJobMaxAggregateInputType = {
@@ -7365,6 +7369,7 @@ export namespace Prisma {
     name?: true
     created_at?: true
     updated_at?: true
+    thumbnail?: true
   }
 
   export type CategoryJobCountAggregateInputType = {
@@ -7372,6 +7377,7 @@ export namespace Prisma {
     name?: true
     created_at?: true
     updated_at?: true
+    thumbnail?: true
     _all?: true
   }
 
@@ -7452,6 +7458,7 @@ export namespace Prisma {
     name: string
     created_at: Date
     updated_at: Date
+    thumbnail: string | null
     _count: CategoryJobCountAggregateOutputType | null
     _min: CategoryJobMinAggregateOutputType | null
     _max: CategoryJobMaxAggregateOutputType | null
@@ -7476,6 +7483,7 @@ export namespace Prisma {
     name?: boolean
     created_at?: boolean
     updated_at?: boolean
+    thumbnail?: boolean
     job_posts?: boolean | CategoryJob$job_postsArgs<ExtArgs>
     _count?: boolean | CategoryJobCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["categoryJob"]>
@@ -7485,6 +7493,7 @@ export namespace Prisma {
     name?: boolean
     created_at?: boolean
     updated_at?: boolean
+    thumbnail?: boolean
   }, ExtArgs["result"]["categoryJob"]>
 
   export type CategoryJobSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7492,6 +7501,7 @@ export namespace Prisma {
     name?: boolean
     created_at?: boolean
     updated_at?: boolean
+    thumbnail?: boolean
   }, ExtArgs["result"]["categoryJob"]>
 
   export type CategoryJobSelectScalar = {
@@ -7499,9 +7509,10 @@ export namespace Prisma {
     name?: boolean
     created_at?: boolean
     updated_at?: boolean
+    thumbnail?: boolean
   }
 
-  export type CategoryJobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "created_at" | "updated_at", ExtArgs["result"]["categoryJob"]>
+  export type CategoryJobOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "created_at" | "updated_at" | "thumbnail", ExtArgs["result"]["categoryJob"]>
   export type CategoryJobInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job_posts?: boolean | CategoryJob$job_postsArgs<ExtArgs>
     _count?: boolean | CategoryJobCountOutputTypeDefaultArgs<ExtArgs>
@@ -7519,6 +7530,7 @@ export namespace Prisma {
       name: string
       created_at: Date
       updated_at: Date
+      thumbnail: string | null
     }, ExtArgs["result"]["categoryJob"]>
     composites: {}
   }
@@ -7947,6 +7959,7 @@ export namespace Prisma {
     readonly name: FieldRef<"CategoryJob", 'String'>
     readonly created_at: FieldRef<"CategoryJob", 'DateTime'>
     readonly updated_at: FieldRef<"CategoryJob", 'DateTime'>
+    readonly thumbnail: FieldRef<"CategoryJob", 'String'>
   }
     
 
@@ -9528,7 +9541,8 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     created_at: 'created_at',
-    updated_at: 'updated_at'
+    updated_at: 'updated_at',
+    thumbnail: 'thumbnail'
   };
 
   export type CategoryJobScalarFieldEnum = (typeof CategoryJobScalarFieldEnum)[keyof typeof CategoryJobScalarFieldEnum]
@@ -10034,6 +10048,7 @@ export namespace Prisma {
     name?: StringFilter<"CategoryJob"> | string
     created_at?: DateTimeFilter<"CategoryJob"> | Date | string
     updated_at?: DateTimeFilter<"CategoryJob"> | Date | string
+    thumbnail?: StringNullableFilter<"CategoryJob"> | string | null
     job_posts?: JobPostListRelationFilter
   }
 
@@ -10042,6 +10057,7 @@ export namespace Prisma {
     name?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    thumbnail?: SortOrderInput | SortOrder
     job_posts?: JobPostOrderByRelationAggregateInput
   }
 
@@ -10053,6 +10069,7 @@ export namespace Prisma {
     NOT?: CategoryJobWhereInput | CategoryJobWhereInput[]
     created_at?: DateTimeFilter<"CategoryJob"> | Date | string
     updated_at?: DateTimeFilter<"CategoryJob"> | Date | string
+    thumbnail?: StringNullableFilter<"CategoryJob"> | string | null
     job_posts?: JobPostListRelationFilter
   }, "id" | "name">
 
@@ -10061,6 +10078,7 @@ export namespace Prisma {
     name?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    thumbnail?: SortOrderInput | SortOrder
     _count?: CategoryJobCountOrderByAggregateInput
     _max?: CategoryJobMaxOrderByAggregateInput
     _min?: CategoryJobMinOrderByAggregateInput
@@ -10074,6 +10092,7 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"CategoryJob"> | string
     created_at?: DateTimeWithAggregatesFilter<"CategoryJob"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"CategoryJob"> | Date | string
+    thumbnail?: StringNullableWithAggregatesFilter<"CategoryJob"> | string | null
   }
 
   export type LevelWhereInput = {
@@ -10571,6 +10590,7 @@ export namespace Prisma {
     name: string
     created_at?: Date | string
     updated_at?: Date | string
+    thumbnail?: string | null
     job_posts?: JobPostCreateNestedManyWithoutCategoryInput
   }
 
@@ -10579,6 +10599,7 @@ export namespace Prisma {
     name: string
     created_at?: Date | string
     updated_at?: Date | string
+    thumbnail?: string | null
     job_posts?: JobPostUncheckedCreateNestedManyWithoutCategoryInput
   }
 
@@ -10587,6 +10608,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     job_posts?: JobPostUpdateManyWithoutCategoryNestedInput
   }
 
@@ -10595,6 +10617,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
     job_posts?: JobPostUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
@@ -10603,6 +10626,7 @@ export namespace Prisma {
     name: string
     created_at?: Date | string
     updated_at?: Date | string
+    thumbnail?: string | null
   }
 
   export type CategoryJobUpdateManyMutationInput = {
@@ -10610,6 +10634,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CategoryJobUncheckedUpdateManyInput = {
@@ -10617,6 +10642,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type LevelCreateInput = {
@@ -11034,6 +11060,7 @@ export namespace Prisma {
     name?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    thumbnail?: SortOrder
   }
 
   export type CategoryJobMaxOrderByAggregateInput = {
@@ -11041,6 +11068,7 @@ export namespace Prisma {
     name?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    thumbnail?: SortOrder
   }
 
   export type CategoryJobMinOrderByAggregateInput = {
@@ -11048,6 +11076,7 @@ export namespace Prisma {
     name?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    thumbnail?: SortOrder
   }
 
   export type LevelCountOrderByAggregateInput = {
@@ -11802,6 +11831,7 @@ export namespace Prisma {
     name: string
     created_at?: Date | string
     updated_at?: Date | string
+    thumbnail?: string | null
   }
 
   export type CategoryJobUncheckedCreateWithoutJob_postsInput = {
@@ -11809,6 +11839,7 @@ export namespace Prisma {
     name: string
     created_at?: Date | string
     updated_at?: Date | string
+    thumbnail?: string | null
   }
 
   export type CategoryJobCreateOrConnectWithoutJob_postsInput = {
@@ -11918,6 +11949,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CategoryJobUncheckedUpdateWithoutJob_postsInput = {
@@ -11925,6 +11957,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type LevelUpsertWithoutJobPostsInput = {

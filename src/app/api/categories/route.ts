@@ -46,10 +46,11 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create new category
+    // Create new category with thumbnail
     const category = await prisma.categoryJob.create({
       data: {
         name: body.name,
+        thumbnail: body.thumbnail ?? null,
       },
     });
 
