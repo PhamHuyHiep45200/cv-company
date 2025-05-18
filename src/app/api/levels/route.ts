@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json(level, { status: 201 });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating level:', error);
     
     // Handle specific Prisma errors
