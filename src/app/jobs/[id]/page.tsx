@@ -13,6 +13,7 @@ import { formatDistance } from "date-fns";
 import { vi } from "date-fns/locale";
 import { useAuth } from '@/hooks/useAuth';
 import ApplyModal from './ApplyModal';
+import ConfirmDialog from '@/components/ConfirmDialog';
 
 export default function JobDetailPage() {
   const params = useParams();
@@ -21,6 +22,7 @@ export default function JobDetailPage() {
   const [showApply, setShowApply] = useState(false);
   const { user } = useAuth();
   const [relatedJobs, setRelatedJobs] = useState<any[]>([]);
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
 
   useEffect(() => {
     async function fetchJob() {
@@ -93,6 +95,14 @@ export default function JobDetailPage() {
       },
     };
   }
+
+  const handleApplyClick = () => {
+    if (!user) {
+      setShowLoginDialog(true);
+    } else {
+      setShowApply(true);
+    }
+  };
 
   return (
     <main className="bg-white min-h-screen w-full flex flex-col items-center">
@@ -199,7 +209,7 @@ export default function JobDetailPage() {
           <div className="flex justify-end">
             <button
               className="bg-gradient-to-r from-[#309689] to-[#3ad29f] text-white px-10 py-4 rounded-lg font-bold font-['Figtree'] shadow-lg hover:from-[#26786b] hover:to-[#309689] transition text-lg"
-              onClick={() => setShowApply(true)}
+              onClick={handleApplyClick}
             >
               Ứng tuyển ngay
             </button>
@@ -261,6 +271,20 @@ export default function JobDetailPage() {
       )}
 
       <ApplyModal open={showApply} onClose={() => setShowApply(false)} user={user || undefined} jobId={Array.isArray(params.id) ? params.id[0] : params.id} />
+      <ConfirmDialog
+        isOpen={showLoginDialog}
+        title="Thông báo"
+        message="Bạn cần đăng nhập để ứng tuyển."
+        onConfirm={() => {
+          setShowLoginDialog(false);
+          // Save current path for redirect after login
+          const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
+          window.location.href = `/login?redirect=${encodeURIComponent(currentPath)}`;
+        }}
+        onCancel={() => setShowLoginDialog(false)}
+        confirmText="OK"
+        cancelText="Hủy"
+      />
     </main>
   );
 } 

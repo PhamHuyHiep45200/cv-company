@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FaUser, FaLock, FaFacebookF, FaTwitter } from 'react-icons/fa';
 import { useLoading } from '../loading-provider';
 import { useGoogleLogin } from '@react-oauth/google';
@@ -10,6 +10,8 @@ import { AppDispatch } from '@/store/store';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectPath = searchParams.get('redirect');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -57,10 +59,10 @@ export default function LoginPage() {
         throw new Error(data.message || 'Đăng nhập thất bại');
       }
 
-      // The token is already set in the cookie by the server
-      // Redirect based on role
       setAuthenticate(true);
-      if (data.user && data.user.role === 'CANDIDATE') {
+      if (redirectPath) {
+        router.push(redirectPath);
+      } else if (data.user && data.user.role === 'CANDIDATE') {
         router.push('/');
       } else {
         router.push('/admin');
@@ -96,9 +98,10 @@ export default function LoginPage() {
         if (!snsRes.ok || !snsData.success) {
           throw new Error(snsData.message || 'SNS login failed');
         }
-        // Success: redirect based on role
         setAuthenticate(true);
-        if (snsData.user && snsData.user.role === 'CANDIDATE') {
+        if (redirectPath) {
+          router.push(redirectPath);
+        } else if (snsData.user && snsData.user.role === 'CANDIDATE') {
           router.push('/');
         } else {
           router.push('/admin');
