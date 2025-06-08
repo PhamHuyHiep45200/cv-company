@@ -6,7 +6,9 @@ import { FaUser, FaLock } from 'react-icons/fa';
 export default function RegisterPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
+    phone: '',
     password: '',
     confirmPassword: '',
   });
@@ -29,12 +31,30 @@ export default function RegisterPage() {
       setLoading(false);
       return;
     }
-    // TODO: Implement actual register logic
-    setTimeout(() => {
-      setSuccess('Registration successful!');
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.error || 'Đăng ký thất bại');
+        setLoading(false);
+        return;
+      }
+      setSuccess('Đăng ký thành công!');
       setLoading(false);
       setTimeout(() => router.push('/login'), 1500);
-    }, 1000);
+    } catch (err: any) {
+      setError('Có lỗi xảy ra khi đăng ký');
+      setLoading(false);
+    }
   };
 
   return (
@@ -47,6 +67,19 @@ export default function RegisterPage() {
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"><FaUser /></span>
             <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              value={formData.name}
+              onChange={handleChange}
+              className="pl-10 pr-4 py-2 w-full border-b border-gray-300 focus:border-purple-400 outline-none bg-transparent placeholder-gray-400"
+              placeholder="Nhập tên của bạn"
+            />
+          </div>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"><FaUser /></span>
+            <input
               id="email"
               name="email"
               type="email"
@@ -55,6 +88,19 @@ export default function RegisterPage() {
               onChange={handleChange}
               className="pl-10 pr-4 py-2 w-full border-b border-gray-300 focus:border-purple-400 outline-none bg-transparent placeholder-gray-400"
               placeholder="Nhập email của bạn"
+            />
+          </div>
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"><FaUser /></span>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              required
+              value={formData.phone}
+              onChange={handleChange}
+              className="pl-10 pr-4 py-2 w-full border-b border-gray-300 focus:border-purple-400 outline-none bg-transparent placeholder-gray-400"
+              placeholder="Nhập số điện thoại của bạn"
             />
           </div>
           <div className="relative">

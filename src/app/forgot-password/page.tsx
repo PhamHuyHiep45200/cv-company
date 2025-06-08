@@ -15,11 +15,22 @@ export default function ForgotPasswordPage() {
     setError('');
     setSuccess('');
     setLoading(true);
-    // TODO: Implement actual forgot password logic
-    setTimeout(() => {
-      setSuccess('If this email exists, a reset link has been sent.');
+    try {
+      const res = await fetch('/api/emails/reset-pass', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Gửi email thất bại.');
+      }
+      setSuccess('Nếu email này tồn tại, một mật khẩu mới đã được gửi về email của bạn.');
+    } catch (err: any) {
+      setError(err.message || 'Gửi email thất bại.');
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -47,7 +58,7 @@ export default function ForgotPasswordPage() {
             disabled={loading}
             className="w-full py-2 rounded-full text-white font-semibold text-lg bg-gradient-to-r from-[#309689] to-[#3ad29f] shadow-md hover:from-[#26786b] hover:to-[#309689] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#309689] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Đang gửi...' : 'GỬI LIÊN KẾT ĐẶT LẠI'}
+            {loading ? 'Đang gửi...' : 'Tôi muốn reset mật khẩu của mình'}
           </button>
         </form>
         <div className="mt-6 text-gray-500 text-sm">
